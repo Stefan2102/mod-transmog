@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.suo
+*.user
+*.o
+*.a
+*.lib
+*.dll
+*.exp
+*.pdb
+
