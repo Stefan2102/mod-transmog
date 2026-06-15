@@ -8,10 +8,11 @@ Based on the official [azerothcore/mod-transmog](https://github.com/azerothcore/
 
 Features:
 
-- Account-wide appearance collection — unlocked only when a character equips an armor or weapon item. Once unlocked, all characters on the same account can use the appearance.
-- Gossip NPC similar to the official `mod-transmog`.
-- Configurable flat copper cost.
-- Hide armor slot option (configurable free or paid). Weapons, jewelry, and trinkets cannot be hidden.
+- Slot-based transmog — appearances stay on the equipment slot when you swap gear.
+- Account-wide collection — any appearance unlocked by one character is available to all characters on the account.
+- Appearances unlock when you equip an item, not when it enters your inventory.
+- Flat copper cost per transmog application, fully configurable.
+- Option to hide individual armor slots (helm, shoulders, chest, etc.). Configurable as free or paid.
 
 ## Installation
 
