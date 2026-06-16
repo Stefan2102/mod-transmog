@@ -1,15 +1,14 @@
 # mod-transmog
 
-Slot-based transmogrification module for AzerothCore WotLK 3.3.5a.
-
-Based on the official [azerothcore/mod-transmog](https://github.com/azerothcore/mod-transmog). The main difference is that appearances are stored per `(player, equipment slot)` instead of per item GUID, so the look stays when you equip a new item in the same slot. 
+Slot-based transmogrification module for [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) based on [azerothcore/mod-transmog](https://github.com/azerothcore/mod-transmog). The main difference is that appearances are stored per `(player, equipment slot)` instead of per item GUID, so the look stays when you swap gear. Other players see the transmogged appearance through the standard visible-item update hooks.
 
 Features:
 
-- Account-wide appearance collection — unlocked only when a character equips an armor or weapon item. Once unlocked, all characters on the same account can use the appearance.
-- Gossip NPC similar to the official `mod-transmog`.
-- Configurable flat copper cost.
-- Hide armor slot option (configurable free or paid). Weapons, jewelry, and trinkets cannot be hidden.
+- Slot-based transmog — appearances stay on the equipment slot when you swap gear.
+- Account-wide collection — any appearance unlocked by one character is available to all characters on the account.
+- Appearances unlock when you equip an item, not when it enters your inventory.
+- Flat copper cost per transmog application, fully configurable.
+- Option to hide individual armor slots (helm, shoulders, chest, etc.). Configurable as free or paid.
 
 ## Installation
 
