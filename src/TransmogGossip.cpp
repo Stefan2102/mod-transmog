@@ -10,7 +10,7 @@
 
 namespace
 {
-    std::vector<ItemTemplate const*> GetValidAppearances(Player* player, ItemTemplate const* targetTemplate)
+    std::vector<ItemTemplate const*> GetValidAppearances(Player* player, ItemTemplate const* targetTemplate, uint8 slot)
     {
         std::vector<ItemTemplate const*> result;
         uint32 accountId = player->GetSession()->GetAccountId();
@@ -33,7 +33,7 @@ namespace
             }
             else
             {
-                if (TransmogRules_SuitableForTransmogrification(player, sourceTemplate))
+                if (TransmogRules_SuitableForTransmogrification(player, sourceTemplate) && TransmogRules_ItemFitsInSlot(sourceTemplate, slot))
                     result.push_back(sourceTemplate);
             }
         }
@@ -187,7 +187,7 @@ private:
 
         Item* targetItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
         ItemTemplate const* targetTemplate = targetItem ? targetItem->GetTemplate() : nullptr;
-        std::vector<ItemTemplate const*> appearances = GetValidAppearances(player, targetTemplate);
+        std::vector<ItemTemplate const*> appearances = GetValidAppearances(player, targetTemplate, slot);
         uint32 currentFake = sTransmog->GetSlotAppearance(guid, slot);
 
         uint32 totalPages = (appearances.size() + MAX_ITEMS_PER_PAGE - 1) / MAX_ITEMS_PER_PAGE;

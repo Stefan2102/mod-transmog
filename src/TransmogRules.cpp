@@ -47,6 +47,32 @@ bool TransmogRules_IsArmorProficiencySpell(uint32 spellId)
 }
 
 // ==========================================
+// ITEM FITS IN SLOT
+// ==========================================
+
+bool TransmogRules_ItemFitsInSlot(ItemTemplate const* proto, uint8 slot)
+{
+    switch (slot)
+    {
+        case EQUIPMENT_SLOT_HEAD: return proto->InventoryType == INVTYPE_HEAD;
+        case EQUIPMENT_SLOT_SHOULDERS: return proto->InventoryType == INVTYPE_SHOULDERS;
+        case EQUIPMENT_SLOT_BODY: return proto->InventoryType == INVTYPE_BODY;
+        case EQUIPMENT_SLOT_CHEST: return proto->InventoryType == INVTYPE_CHEST || proto->InventoryType == INVTYPE_ROBE;
+        case EQUIPMENT_SLOT_WAIST: return proto->InventoryType == INVTYPE_WAIST;
+        case EQUIPMENT_SLOT_LEGS: return proto->InventoryType == INVTYPE_LEGS;
+        case EQUIPMENT_SLOT_FEET: return proto->InventoryType == INVTYPE_FEET;
+        case EQUIPMENT_SLOT_WRISTS: return proto->InventoryType == INVTYPE_WRISTS;
+        case EQUIPMENT_SLOT_HANDS: return proto->InventoryType == INVTYPE_HANDS;
+        case EQUIPMENT_SLOT_BACK: return proto->InventoryType == INVTYPE_CLOAK;
+        case EQUIPMENT_SLOT_TABARD: return proto->InventoryType == INVTYPE_TABARD;
+        case EQUIPMENT_SLOT_MAINHAND: return proto->InventoryType == INVTYPE_WEAPON || proto->InventoryType == INVTYPE_WEAPONMAINHAND || proto->InventoryType == INVTYPE_2HWEAPON;
+        case EQUIPMENT_SLOT_OFFHAND: return proto->InventoryType == INVTYPE_WEAPON || proto->InventoryType == INVTYPE_WEAPONOFFHAND || proto->InventoryType == INVTYPE_SHIELD || proto->InventoryType == INVTYPE_HOLDABLE;
+        case EQUIPMENT_SLOT_RANGED: return proto->InventoryType == INVTYPE_RANGED || proto->InventoryType == INVTYPE_RANGEDRIGHT || proto->InventoryType == INVTYPE_THROWN;
+        default: return false;
+    }
+}
+
+// ==========================================
 // IS RANGED WEAPON
 // ==========================================
 

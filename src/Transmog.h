@@ -150,6 +150,7 @@ public:
 
 bool TransmogRules_IsArmorSlot(uint8 slot);
 bool TransmogRules_IsArmorProficiencySpell(uint32 spellId);
+bool TransmogRules_ItemFitsInSlot(ItemTemplate const* proto, uint8 slot);
 bool TransmogRules_IsRangedWeapon(uint32 itemClass, uint32 subClass);
 bool TransmogRules_CanNeverTransmog(ItemTemplate const* proto);
 bool TransmogRules_IsItemTransmogrifiable(Player const* player, ItemTemplate const* proto);

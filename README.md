@@ -40,6 +40,11 @@ Features:
 
 All prices, quality requirements, type restrictions, and requirement ignores are configurable in `mod_transmog.conf`. See the distributed config file for details.
 
+## Known Limitations
+
+- **Hidden slot icon:** When a slot is set to hidden, the character-sheet icon becomes invisible rather than showing an empty slot icon. This is a side effect of using a non-existent item entry as the hidden sentinel, which is needed to fix the unequip refresh bug.
+- **Set bonus counter:** Transmogging an item that belongs to an equipment set causes the client to show the wrong count (e.g. 5/6 instead of 6/6). The set bonus still functions correctly — the counter is a display-only issue.
+
 ## License
 
 GNU Affero General Public License v3 — see `LICENSE`.
