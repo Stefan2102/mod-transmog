@@ -66,7 +66,7 @@ bool TransmogRules_ItemFitsInSlot(ItemTemplate const* proto, uint8 slot)
         case EQUIPMENT_SLOT_BACK: return proto->InventoryType == INVTYPE_CLOAK;
         case EQUIPMENT_SLOT_TABARD: return proto->InventoryType == INVTYPE_TABARD;
         case EQUIPMENT_SLOT_MAINHAND: return proto->InventoryType == INVTYPE_WEAPON || proto->InventoryType == INVTYPE_WEAPONMAINHAND || proto->InventoryType == INVTYPE_2HWEAPON;
-        case EQUIPMENT_SLOT_OFFHAND: return proto->InventoryType == INVTYPE_WEAPON || proto->InventoryType == INVTYPE_WEAPONOFFHAND || proto->InventoryType == INVTYPE_SHIELD || proto->InventoryType == INVTYPE_HOLDABLE;
+        case EQUIPMENT_SLOT_OFFHAND: return proto->InventoryType == INVTYPE_WEAPON || proto->InventoryType == INVTYPE_WEAPONOFFHAND || proto->InventoryType == INVTYPE_SHIELD || proto->InventoryType == INVTYPE_HOLDABLE || proto->InventoryType == INVTYPE_2HWEAPON;
         case EQUIPMENT_SLOT_RANGED: return proto->InventoryType == INVTYPE_RANGED || proto->InventoryType == INVTYPE_RANGEDRIGHT || proto->InventoryType == INVTYPE_THROWN;
         default: return false;
     }
