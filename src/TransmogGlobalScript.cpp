@@ -1,5 +1,9 @@
 #include "Transmog.h"
 
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
+
 class TransmogGlobalScript : public GlobalScript
 {
 public:
@@ -28,6 +32,10 @@ public:
             display = sourceTemplate->DisplayInfoID;
     }
 };
+
+// ==========================================
+// LOADER
+// ==========================================
 
 void AddSC_TransmogGlobalScript()
 {

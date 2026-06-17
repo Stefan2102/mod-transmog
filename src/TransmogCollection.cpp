@@ -1,5 +1,9 @@
 #include "Transmog.h"
 
+// ==========================================
+// LOAD COLLECTION FOR ACCOUNT
+// ==========================================
+
 void Transmog::LoadCollectionForAccount(uint32 accountId)
 {
     {
@@ -23,6 +27,10 @@ void Transmog::LoadCollectionForAccount(uint32 accountId)
         collectionCache.emplace(accountId, std::move(items));
 }
 
+// ==========================================
+// UNREF COLLECTION FOR ACCOUNT
+// ==========================================
+
 void Transmog::UnrefCollectionForAccount(uint32 accountId)
 {
     std::unique_lock<std::shared_mutex> lock(collectionMutex);
@@ -36,6 +44,10 @@ void Transmog::UnrefCollectionForAccount(uint32 accountId)
         collectionCache.erase(accountId);
     }
 }
+
+// ==========================================
+// ADD COLLECTED APPEARANCE
+// ==========================================
 
 bool Transmog::AddCollectedAppearance(uint32 accountId, uint32 itemId)
 {

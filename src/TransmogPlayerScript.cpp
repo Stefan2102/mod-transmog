@@ -1,6 +1,10 @@
 #include "Transmog.h"
 #include "Chat.h"
 
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
+
 class TransmogPlayerScript : public PlayerScript
 {
 public:
@@ -11,9 +15,12 @@ public:
         PLAYERHOOK_ON_EQUIP,
         PLAYERHOOK_ON_UNEQUIP_ITEM,
         PLAYERHOOK_ON_LEARN_SPELL,
-        PLAYERHOOK_ON_AFTER_SET_VISIBLE_ITEM_SLOT,
-        PLAYERHOOK_ON_AFTER_MOVE_ITEM_FROM_INVENTORY
+        PLAYERHOOK_ON_AFTER_SET_VISIBLE_ITEM_SLOT
     }) { }
+
+// ==========================================
+// ON PLAYER LOGIN
+// ==========================================
 
     void OnPlayerLogin(Player* player) override
     {
@@ -29,6 +36,10 @@ public:
         sTransmog->RefreshAllSlots(player);
     }
 
+// ==========================================
+// ON PLAYER LOGOUT
+// ==========================================
+
     void OnPlayerLogout(Player* player) override
     {
         sTransmog->UnloadPlayerSlots(player->GetGUID());
@@ -36,10 +47,18 @@ public:
         sTransmog->UnrefCollectionForAccount(player->GetSession()->GetAccountId());
     }
 
+// ==========================================
+// ON PLAYER DELETE
+// ==========================================
+
     void OnPlayerDelete(ObjectGuid guid, uint32) override
     {
         CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
     }
+
+// ==========================================
+// ON PLAYER EQUIP
+// ==========================================
 
     void OnPlayerEquip(Player* player, Item* item, uint8, uint8, bool) override
     {
@@ -62,6 +81,10 @@ public:
         }
     }
 
+// ==========================================
+// ON PLAYER UNEQUIP
+// ==========================================
+
     void OnPlayerUnequip(Player* player, Item*) override
     {
         if (!sTransmog->Enable)
@@ -75,6 +98,10 @@ public:
         }
     }
 
+// ==========================================
+// ON PLAYER LEARN SPELL
+// ==========================================
+
     void OnPlayerLearnSpell(Player* player, uint32 spellId) override
     {
         if (!sTransmog->Enable)
@@ -84,6 +111,10 @@ public:
             sTransmog->RefreshAllSlots(player);
     }
 
+// ==========================================
+// ON PLAYER AFTER SET VISIBLE ITEM SLOT
+// ==========================================
+
     void OnPlayerAfterSetVisibleItemSlot(Player* player, uint8 slot, Item* item) override
     {
         if (!sTransmog->Enable)
@@ -91,16 +122,11 @@ public:
 
         sTransmog->ApplySlot(player, slot, item);
     }
-
-    void OnPlayerAfterMoveItemFromInventory(Player* player, Item*, uint8 bag, uint8 slot, bool) override
-    {
-        if (!sTransmog->Enable)
-            return;
-
-        if (bag == INVENTORY_SLOT_BAG_0 && slot < EQUIPMENT_SLOT_END)
-            sTransmog->RefreshSlot(player, slot);
-    }
 };
+
+// ==========================================
+// LOADER
+// ==========================================
 
 void AddSC_TransmogPlayerScript()
 {

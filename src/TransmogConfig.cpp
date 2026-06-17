@@ -1,5 +1,9 @@
 #include "Transmog.h"
 
+// ==========================================
+// LOAD CONFIG
+// ==========================================
+
 void Transmog::LoadConfig()
 {
     Enable = sConfigMgr->GetOption<bool>("Transmog.Enable", true);

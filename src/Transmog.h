@@ -20,6 +20,10 @@
 #include <shared_mutex>
 #include <mutex>
 
+// ==========================================
+// CONSTANTS AND ENUMS
+// ==========================================
+
 constexpr uint32 HIDDEN_ITEM_ID = 999999;
 constexpr uint8 MAX_ITEMS_PER_PAGE = 20;
 
@@ -37,7 +41,6 @@ enum MenuId : uint32
 enum TransmogString : uint32
 {
     LANG_TRANSMOG_OK = 1,
-    LANG_TRANSMOG_EMPTY_SLOT,
     LANG_TRANSMOG_INVALID_SRC,
     LANG_TRANSMOG_ALL_REMOVED,
     LANG_TRANSMOG_HIDDEN,
@@ -55,10 +58,18 @@ enum TransmogString : uint32
     LANG_TRANSMOG_FREE
 };
 
+// ==========================================
+// INLINE HELPER
+// ==========================================
+
 inline std::string const& Tstr(WorldSession* session, uint32 id)
 {
     return *session->GetModuleString("mod-transmog", id);
 }
+
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
 
 class Transmog
 {
@@ -132,6 +143,10 @@ public:
 };
 
 #define sTransmog Transmog::instance()
+
+// ==========================================
+// FREE FUNCTION DECLARATIONS
+// ==========================================
 
 bool TransmogRules_IsArmorSlot(uint8 slot);
 bool TransmogRules_IsArmorProficiencySpell(uint32 spellId);

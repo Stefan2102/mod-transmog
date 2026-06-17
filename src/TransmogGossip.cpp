@@ -4,6 +4,10 @@
 #include <algorithm>
 #include <vector>
 
+// ==========================================
+// ANONYMOUS NAMESPACE HELPERS
+// ==========================================
+
 namespace
 {
     std::vector<ItemTemplate const*> GetValidAppearances(Player* player, ItemTemplate const* targetTemplate)
@@ -22,8 +26,16 @@ namespace
             if (!sourceTemplate)
                 continue;
 
-            if (TransmogRules_CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate))
-                result.push_back(sourceTemplate);
+            if (targetTemplate)
+            {
+                if (TransmogRules_CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate))
+                    result.push_back(sourceTemplate);
+            }
+            else
+            {
+                if (TransmogRules_SuitableForTransmogrification(player, sourceTemplate))
+                    result.push_back(sourceTemplate);
+            }
         }
 
         std::sort(result.begin(), result.end(), [](ItemTemplate const* a, ItemTemplate const* b)
@@ -76,10 +88,18 @@ namespace
     }
 }
 
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
+
 class npc_transmogrifier : public CreatureScript
 {
 public:
     npc_transmogrifier() : CreatureScript("npc_transmogrifier") { }
+
+// ==========================================
+// ON GOSSIP HELLO
+// ==========================================
 
     bool OnGossipHello(Player* player, Creature* creature) override
     {
@@ -99,6 +119,10 @@ public:
         SendGossipMenuFor(player, 601084, creature->GetGUID());
         return true;
     }
+
+// ==========================================
+// ON GOSSIP SELECT
+// ==========================================
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 sender, uint32 action) override
     {
@@ -144,6 +168,10 @@ public:
         return true;
     }
 
+// ==========================================
+// SHOW SOURCE LIST
+// ==========================================
+
 private:
     void ShowSourceList(Player* player, Creature* creature, uint32 page)
     {
@@ -158,15 +186,7 @@ private:
         }
 
         Item* targetItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
-        if (!targetItem)
-        {
-            AddGossipItemFor(player, GOSSIP_ICON_CHAT, Tstr(session, LANG_TRANSMOG_EMPTY_SLOT), MENU_MAIN, 0);
-            AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_BACK), MENU_MAIN, 0);
-            SendGossipMenuFor(player, 601084, creature->GetGUID());
-            return;
-        }
-
-        ItemTemplate const* targetTemplate = targetItem->GetTemplate();
+        ItemTemplate const* targetTemplate = targetItem ? targetItem->GetTemplate() : nullptr;
         std::vector<ItemTemplate const*> appearances = GetValidAppearances(player, targetTemplate);
         uint32 currentFake = sTransmog->GetSlotAppearance(guid, slot);
 
@@ -183,8 +203,10 @@ private:
             headerIcon = "|TInterface/ICONS/inv_misc_enggizmos_27:30:30:-18:0|t";
         else if (currentFake)
             headerIcon = Transmog::GetItemIcon(currentFake, 30, 30, -18, 0);
-        else
+        else if (targetItem)
             headerIcon = Transmog::GetItemIcon(targetItem->GetEntry(), 30, 30, -18, 0);
+        else
+            headerIcon = Transmog::GetSlotIcon(slot, 30, 30, -18, 0);
 
         AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, headerIcon + Transmog::GetSlotName(slot), MENU_MAIN, 0);
 
@@ -224,6 +246,10 @@ private:
         SendGossipMenuFor(player, 601084, creature->GetGUID());
     }
 
+// ==========================================
+// APPLY APPEARANCE
+// ==========================================
+
     void ApplyAppearance(Player* player, uint32 itemEntry)
     {
         WorldSession* session = player->GetSession();
@@ -234,11 +260,6 @@ private:
             return;
 
         Item* targetItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
-        if (!targetItem)
-        {
-            ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_EMPTY_SLOT));
-            return;
-        }
 
         if (itemEntry == HIDDEN_ITEM_ID && !TransmogRules_IsArmorSlot(slot))
         {
@@ -262,7 +283,7 @@ private:
             return;
         }
 
-        if (itemEntry != HIDDEN_ITEM_ID)
+        if (itemEntry != HIDDEN_ITEM_ID && targetItem)
         {
             ItemTemplate const* targetTemplate = targetItem->GetTemplate();
             ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(itemEntry);
@@ -281,6 +302,10 @@ private:
         ChatHandler(session).SendNotification(itemEntry == HIDDEN_ITEM_ID ? Tstr(session, LANG_TRANSMOG_HIDDEN) : Tstr(session, LANG_TRANSMOG_OK));
     }
 };
+
+// ==========================================
+// LOADER
+// ==========================================
 
 void AddSC_TransmogGossip()
 {

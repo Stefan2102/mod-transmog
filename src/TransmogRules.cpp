@@ -1,5 +1,9 @@
 #include "Transmog.h"
 
+// ==========================================
+// ANONYMOUS NAMESPACE
+// ==========================================
+
 namespace
 {
     constexpr uint32 ArmorSpellIds[4] = { 750, 8737, 9077, 9078 };
@@ -11,6 +15,10 @@ namespace
         ITEM_SUBCLASS_ARMOR_CLOTH
     };
 }
+
+// ==========================================
+// IS ARMOR SLOT / IS ARMOR PROFICIENCY SPELL
+// ==========================================
 
 bool TransmogRules_IsArmorSlot(uint8 slot)
 {
@@ -38,6 +46,10 @@ bool TransmogRules_IsArmorProficiencySpell(uint32 spellId)
     return spellId == 750 || spellId == 8737 || spellId == 9077 || spellId == 9078;
 }
 
+// ==========================================
+// IS RANGED WEAPON
+// ==========================================
+
 bool TransmogRules_IsRangedWeapon(uint32 itemClass, uint32 subClass)
 {
     return itemClass == ITEM_CLASS_WEAPON && (
@@ -45,6 +57,10 @@ bool TransmogRules_IsRangedWeapon(uint32 itemClass, uint32 subClass)
         subClass == ITEM_SUBCLASS_WEAPON_GUN ||
         subClass == ITEM_SUBCLASS_WEAPON_CROSSBOW);
 }
+
+// ==========================================
+// IS VALID OFFHAND ARMOR / IS TIERED ARMOR SUBCLASS
+// ==========================================
 
 bool TransmogRules_IsValidOffhandArmor(uint32 subClass, uint32 invType)
 {
@@ -60,6 +76,10 @@ bool TransmogRules_IsTieredArmorSubclass(uint32 subClass)
         subClass == ITEM_SUBCLASS_ARMOR_LEATHER ||
         subClass == ITEM_SUBCLASS_ARMOR_CLOTH;
 }
+
+// ==========================================
+// GET HIGHEST ARMOR TIER / TIER AVAILABLE
+// ==========================================
 
 bool TransmogRules_GetHighestArmorTier(Player const* player, uint32& highest)
 {
@@ -93,6 +113,10 @@ bool TransmogRules_TierAvailable(Player const* player, uint32 tier)
     }
 }
 
+// ==========================================
+// IS ALLOWED / IS NOT ALLOWED
+// ==========================================
+
 bool TransmogRules_IsAllowed(uint32 entry)
 {
     return sTransmog->Allowed.find(entry) != sTransmog->Allowed.end();
@@ -102,6 +126,10 @@ bool TransmogRules_IsNotAllowed(uint32 entry)
 {
     return sTransmog->NotAllowed.find(entry) != sTransmog->NotAllowed.end();
 }
+
+// ==========================================
+// IS ALLOWED QUALITY
+// ==========================================
 
 bool TransmogRules_IsAllowedQuality(uint32 quality)
 {
@@ -119,6 +147,10 @@ bool TransmogRules_IsAllowedQuality(uint32 quality)
     }
 }
 
+// ==========================================
+// CAN NEVER TRANSMOG
+// ==========================================
+
 bool TransmogRules_CanNeverTransmog(ItemTemplate const* proto)
 {
     return proto->InventoryType == INVTYPE_BAG ||
@@ -128,6 +160,10 @@ bool TransmogRules_CanNeverTransmog(ItemTemplate const* proto)
         proto->InventoryType == INVTYPE_AMMO ||
         proto->InventoryType == INVTYPE_QUIVER;
 }
+
+// ==========================================
+// IS ITEM TRANSMOGRIFIABLE
+// ==========================================
 
 bool TransmogRules_IsItemTransmogrifiable(Player const* player, ItemTemplate const* proto)
 {
@@ -166,6 +202,10 @@ bool TransmogRules_IsItemTransmogrifiable(Player const* player, ItemTemplate con
 
     return true;
 }
+
+// ==========================================
+// SUITABLE FOR TRANSMOGRIFICATION
+// ==========================================
 
 bool TransmogRules_SuitableForTransmogrification(Player const* player, ItemTemplate const* proto)
 {

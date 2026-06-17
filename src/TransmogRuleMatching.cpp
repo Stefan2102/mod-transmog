@@ -5,6 +5,10 @@ bool TransmogRules_IsValidOffhandArmor(uint32 subClass, uint32 invType);
 bool TransmogRules_IsTieredArmorSubclass(uint32 subClass);
 bool TransmogRules_TierAvailable(Player const* player, uint32 tier);
 
+// ==========================================
+// ANONYMOUS NAMESPACE HELPERS
+// ==========================================
+
 namespace
 {
     bool IsInvTypeMismatchAllowed(ItemTemplate const* source, ItemTemplate const* target)
@@ -113,6 +117,10 @@ namespace
         return false;
     }
 }
+
+// ==========================================
+// CAN TRANSMOGRIFY ITEM WITH ITEM
+// ==========================================
 
 bool TransmogRules_CanTransmogrifyItemWithItem(Player const* player, ItemTemplate const* target, ItemTemplate const* source)
 {

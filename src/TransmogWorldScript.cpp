@@ -1,5 +1,9 @@
 #include "Transmog.h"
 
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
+
 class TransmogWorldScript : public WorldScript
 {
 public:
@@ -14,6 +18,10 @@ public:
         CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE NOT EXISTS (SELECT 1 FROM characters WHERE characters.guid = mod_transmog.Owner)");
     }
 };
+
+// ==========================================
+// LOADER
+// ==========================================
 
 void AddSC_TransmogWorldScript()
 {

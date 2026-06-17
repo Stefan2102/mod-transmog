@@ -1,3 +1,7 @@
+// ==========================================
+// TRANSMOG SCRIPT LOADER
+// ==========================================
+
 void AddSC_TransmogGossip();
 void AddSC_TransmogPlayerScript();
 void AddSC_TransmogUnitScript();
