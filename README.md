@@ -9,6 +9,7 @@ Features:
 - Appearances unlock when you equip an item, not when it enters your inventory.
 - Flat copper cost per transmog application, fully configurable.
 - Option to hide individual armor slots (helm, shoulders, chest, etc.). Configurable as free or paid.
+- Empty-slot transmog — appearances can be applied to slots even when nothing is equipped. The stored look only renders once an item is placed in the slot and is valid for it. Incompatible appearances are ignored and the real item is shown instead.
 
 ## Installation
 
@@ -17,7 +18,7 @@ Features:
    ```
    azerothcore-wotlk/
    └── modules/
-       └── mod-transmog/
+        └── mod-transmog-plus/
    ```
 
 2. Apply the SQL files:
