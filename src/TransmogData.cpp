@@ -9,7 +9,7 @@ void Transmog::LoadPlayerSlots(ObjectGuid guid)
     std::array<uint32, EQUIPMENT_SLOT_END> localSlots;
     localSlots.fill(0);
 
-    QueryResult result = CharacterDatabase.Query("SELECT Slot, FakeEntry FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
+    QueryResult result = CharacterDatabase.Query("SELECT Slot, FakeEntry FROM mod_transmog_plus WHERE Owner = {}", guid.GetCounter());
     if (result)
     {
         do
@@ -56,9 +56,9 @@ void Transmog::SetSlotAppearance(Player* player, uint8 slot, uint32 fakeEntry)
     }
 
     if (fakeEntry == 0)
-        CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {} AND Slot = {}", guid.GetCounter(), slot);
+        CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE Owner = {} AND Slot = {}", guid.GetCounter(), slot);
     else
-        CharacterDatabase.Execute("REPLACE INTO mod_transmog (Owner, Slot, FakeEntry) VALUES ({}, {}, {})", guid.GetCounter(), slot, fakeEntry);
+        CharacterDatabase.Execute("REPLACE INTO mod_transmog_plus (Owner, Slot, FakeEntry) VALUES ({}, {}, {})", guid.GetCounter(), slot, fakeEntry);
 }
 
 // ==========================================
@@ -146,7 +146,7 @@ void Transmog::ClearAllSlots(Player* player)
         if (it != slotMap.end())
             it->second.fill(0);
     }
-    CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
+    CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE Owner = {}", guid.GetCounter());
 }
 
 // ==========================================

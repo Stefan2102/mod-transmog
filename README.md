@@ -1,4 +1,4 @@
-# mod-transmog
+# mod-transmog-plus
 
 Slot-based transmogrification module for [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk) based on [azerothcore/mod-transmog](https://github.com/azerothcore/mod-transmog). The main difference is that appearances are stored per `(player, equipment slot)` instead of per item GUID, so the look stays when you swap gear. Other players see the transmogged appearance through the standard visible-item update hooks.
 
@@ -23,11 +23,11 @@ Features:
 2. Apply the SQL files:
 
    ```bash
-   mysql -u acore -p acore_characters < data/sql/characters/mod_transmog_characters.sql
-   mysql -u acore -p acore_world     < data/sql/world/mod_transmog_world.sql
+    mysql -u acore -p acore_characters < data/sql/characters/mod_transmog_plus_characters.sql
+    mysql -u acore -p acore_world     < data/sql/world/mod_transmog_plus_world.sql
    ```
 
-3. Copy `conf/mod_transmog.conf.dist` to your server's modules config folder and remove `.dist`.
+3. Copy `conf/mod_transmog_plus.conf.dist` to your server's modules config folder and remove `.dist`.
 
 4. Rebuild AzerothCore. CMake auto-discovers the module.
 
@@ -38,7 +38,7 @@ Features:
 
 ## Configuration
 
-All prices, quality requirements, type restrictions, and requirement ignores are configurable in `mod_transmog.conf`. See the distributed config file for details.
+All prices, quality requirements, type restrictions, and requirement ignores are configurable in `mod_transmog_plus.conf`. See the distributed config file for details.
 
 ## Known Limitations
 

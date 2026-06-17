@@ -15,7 +15,7 @@ public:
     {
         sTransmog->LoadConfig();
 
-        CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE NOT EXISTS (SELECT 1 FROM characters WHERE characters.guid = mod_transmog.Owner)");
+        CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE NOT EXISTS (SELECT 1 FROM characters WHERE characters.guid = mod_transmog_plus.Owner)");
     }
 };
 

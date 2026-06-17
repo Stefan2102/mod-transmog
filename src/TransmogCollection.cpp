@@ -13,7 +13,7 @@ void Transmog::LoadCollectionForAccount(uint32 accountId)
     }
 
     std::unordered_set<uint32> items;
-    QueryResult result = CharacterDatabase.Query("SELECT item_template_id FROM mod_transmog_appearances WHERE account_id = {}", accountId);
+    QueryResult result = CharacterDatabase.Query("SELECT item_template_id FROM mod_transmog_plus_appearances WHERE account_id = {}", accountId);
     if (result)
     {
         do

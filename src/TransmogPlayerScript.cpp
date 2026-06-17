@@ -53,7 +53,7 @@ public:
 
     void OnPlayerDelete(ObjectGuid guid, uint32) override
     {
-        CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
+        CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE Owner = {}", guid.GetCounter());
     }
 
 // ==========================================
@@ -76,7 +76,7 @@ public:
 
         if (sTransmog->AddCollectedAppearance(accountId, itemId))
         {
-            CharacterDatabase.Execute("INSERT INTO mod_transmog_appearances (account_id, item_template_id) VALUES ({}, {})", accountId, itemId);
+            CharacterDatabase.Execute("INSERT INTO mod_transmog_plus_appearances (account_id, item_template_id) VALUES ({}, {})", accountId, itemId);
             ChatHandler(player->GetSession()).PSendSysMessage("{} {}", Transmog::GetItemLink(itemId, player->GetSession()), Tstr(player->GetSession(), LANG_TRANSMOG_APPEARANCE_ADDED));
         }
     }

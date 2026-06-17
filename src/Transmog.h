@@ -64,7 +64,7 @@ enum TransmogString : uint32
 
 inline std::string const& Tstr(WorldSession* session, uint32 id)
 {
-    return *session->GetModuleString("mod-transmog", id);
+    return *session->GetModuleString("mod-transmog-plus", id);
 }
 
 // ==========================================
