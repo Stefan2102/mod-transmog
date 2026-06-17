@@ -2,6 +2,10 @@
 #include "ByteBuffer.h"
 #include "UpdateFields.h"
 
+// ==========================================
+// CLASS DECLARATION
+// ==========================================
+
 class TransmogUnitScript : public UnitScript
 {
 public:
@@ -49,6 +53,10 @@ public:
         }
     }
 };
+
+// ==========================================
+// LOADER
+// ==========================================
 
 void AddSC_TransmogUnitScript()
 {

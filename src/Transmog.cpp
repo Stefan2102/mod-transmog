@@ -1,10 +1,18 @@
 #include "Transmog.h"
 
+// ==========================================
+// INSTANCE
+// ==========================================
+
 Transmog* Transmog::instance()
 {
     static Transmog instance;
     return &instance;
 }
+
+// ==========================================
+// GET SLOT NAME
+// ==========================================
 
 std::string Transmog::GetSlotName(uint8 slot)
 {
@@ -27,6 +35,10 @@ std::string Transmog::GetSlotName(uint8 slot)
         default: return "";
     }
 }
+
+// ==========================================
+// GET SLOT ICON
+// ==========================================
 
 std::string Transmog::GetSlotIcon(uint8 slot, uint32 width, uint32 height, int x, int y)
 {
@@ -54,6 +66,10 @@ std::string Transmog::GetSlotIcon(uint8 slot, uint32 width, uint32 height, int x
     return ss.str();
 }
 
+// ==========================================
+// GET ITEM ICON
+// ==========================================
+
 std::string Transmog::GetItemIcon(uint32 entry, uint32 width, uint32 height, int x, int y)
 {
     std::ostringstream ss;
@@ -71,6 +87,10 @@ std::string Transmog::GetItemIcon(uint32 entry, uint32 width, uint32 height, int
     ss << ":" << width << ":" << height << ":" << x << ":" << y << "|t";
     return ss.str();
 }
+
+// ==========================================
+// GET ITEM LINK
+// ==========================================
 
 std::string Transmog::GetItemLink(uint32 entry, WorldSession* session)
 {
@@ -92,6 +112,10 @@ std::string Transmog::GetItemLink(uint32 entry, WorldSession* session)
     return oss.str();
 }
 
+// ==========================================
+// GET SLOT GOSSIP ICON
+// ==========================================
+
 std::string Transmog::GetSlotGossipIcon(Player* player, uint8 slot)
 {
     Item* equipped = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
@@ -105,6 +129,10 @@ std::string Transmog::GetSlotGossipIcon(Player* player, uint8 slot)
         return GetItemIcon(fakeEntry, 30, 30, -18, 0);
     return GetItemIcon(equipped->GetEntry(), 30, 30, -18, 0);
 }
+
+// ==========================================
+// GET VISIBLE ENTRY FOR SLOT
+// ==========================================
 
 uint32 Transmog::GetVisibleEntryForSlot(Player const* player, uint8 slot, Item const* item) const
 {
@@ -123,6 +151,10 @@ uint32 Transmog::GetVisibleEntryForSlot(Player const* player, uint8 slot, Item c
 
     return item->GetEntry();
 }
+
+// ==========================================
+// GET VISIBLE ITEM INDEX
+// ==========================================
 
 uint16 Transmog::GetVisibleItemIndex(uint8 slot)
 {

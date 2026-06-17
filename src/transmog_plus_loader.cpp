@@ -1,10 +1,14 @@
+// ==========================================
+// TRANSMOG PLUS SCRIPT LOADER
+// ==========================================
+
 void AddSC_TransmogGossip();
 void AddSC_TransmogPlayerScript();
 void AddSC_TransmogUnitScript();
 void AddSC_TransmogWorldScript();
 void AddSC_TransmogGlobalScript();
 
-void Addmod_transmogScripts()
+void Addmod_transmog_plusScripts()
 {
     AddSC_TransmogGossip();
     AddSC_TransmogPlayerScript();

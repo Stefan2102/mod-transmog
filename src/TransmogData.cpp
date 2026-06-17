@@ -1,11 +1,15 @@
 #include "Transmog.h"
 
+// ==========================================
+// LOAD PLAYER SLOTS
+// ==========================================
+
 void Transmog::LoadPlayerSlots(ObjectGuid guid)
 {
     std::array<uint32, EQUIPMENT_SLOT_END> localSlots;
     localSlots.fill(0);
 
-    QueryResult result = CharacterDatabase.Query("SELECT Slot, FakeEntry FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
+    QueryResult result = CharacterDatabase.Query("SELECT Slot, FakeEntry FROM mod_transmog_plus WHERE Owner = {}", guid.GetCounter());
     if (result)
     {
         do
@@ -25,11 +29,19 @@ void Transmog::LoadPlayerSlots(ObjectGuid guid)
     slotMap[guid] = localSlots;
 }
 
+// ==========================================
+// UNLOAD PLAYER SLOTS
+// ==========================================
+
 void Transmog::UnloadPlayerSlots(ObjectGuid guid)
 {
     std::unique_lock<std::shared_mutex> lock(slotMapMutex);
     slotMap.erase(guid);
 }
+
+// ==========================================
+// SET SLOT APPEARANCE
+// ==========================================
 
 void Transmog::SetSlotAppearance(Player* player, uint8 slot, uint32 fakeEntry)
 {
@@ -44,10 +56,14 @@ void Transmog::SetSlotAppearance(Player* player, uint8 slot, uint32 fakeEntry)
     }
 
     if (fakeEntry == 0)
-        CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {} AND Slot = {}", guid.GetCounter(), slot);
+        CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE Owner = {} AND Slot = {}", guid.GetCounter(), slot);
     else
-        CharacterDatabase.Execute("REPLACE INTO mod_transmog (Owner, Slot, FakeEntry) VALUES ({}, {}, {})", guid.GetCounter(), slot, fakeEntry);
+        CharacterDatabase.Execute("REPLACE INTO mod_transmog_plus (Owner, Slot, FakeEntry) VALUES ({}, {}, {})", guid.GetCounter(), slot, fakeEntry);
 }
+
+// ==========================================
+// GET SLOT APPEARANCE
+// ==========================================
 
 uint32 Transmog::GetSlotAppearance(ObjectGuid guid, uint8 slot) const
 {
@@ -60,6 +76,10 @@ uint32 Transmog::GetSlotAppearance(ObjectGuid guid, uint8 slot) const
         return 0;
     return it->second[slot];
 }
+
+// ==========================================
+// APPLY SLOT
+// ==========================================
 
 void Transmog::ApplySlot(Player* player, uint8 slot, Item* item)
 {
@@ -90,6 +110,10 @@ void Transmog::ApplySlot(Player* player, uint8 slot, Item* item)
     }
 }
 
+// ==========================================
+// REFRESH SLOT
+// ==========================================
+
 void Transmog::RefreshSlot(Player* player, uint8 slot)
 {
     if (slot >= EQUIPMENT_SLOT_END)
@@ -99,11 +123,19 @@ void Transmog::RefreshSlot(Player* player, uint8 slot)
     player->SetVisibleItemSlot(slot, item);
 }
 
+// ==========================================
+// REFRESH ALL SLOTS
+// ==========================================
+
 void Transmog::RefreshAllSlots(Player* player)
 {
     for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
         RefreshSlot(player, slot);
 }
+
+// ==========================================
+// CLEAR ALL SLOTS
+// ==========================================
 
 void Transmog::ClearAllSlots(Player* player)
 {
@@ -114,8 +146,12 @@ void Transmog::ClearAllSlots(Player* player)
         if (it != slotMap.end())
             it->second.fill(0);
     }
-    CharacterDatabase.Execute("DELETE FROM mod_transmog WHERE Owner = {}", guid.GetCounter());
+    CharacterDatabase.Execute("DELETE FROM mod_transmog_plus WHERE Owner = {}", guid.GetCounter());
 }
+
+// ==========================================
+// GET SELECTED SLOT
+// ==========================================
 
 uint8 Transmog::GetSelectedSlot(ObjectGuid guid) const
 {
@@ -126,11 +162,19 @@ uint8 Transmog::GetSelectedSlot(ObjectGuid guid) const
     return it->second;
 }
 
+// ==========================================
+// SET SELECTED SLOT
+// ==========================================
+
 void Transmog::SetSelectedSlot(ObjectGuid guid, uint8 slot)
 {
     std::unique_lock<std::shared_mutex> lock(slotMapMutex);
     selectionCache[guid] = slot;
 }
+
+// ==========================================
+// CLEAR SELECTION
+// ==========================================
 
 void Transmog::ClearSelection(ObjectGuid guid)
 {
